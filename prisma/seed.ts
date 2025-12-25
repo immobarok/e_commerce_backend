@@ -1,5 +1,6 @@
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role } from '../generated/prisma';
 import * as bcrypt from 'bcrypt';
+import 'dotenv/config';
 
 const prisma = new PrismaClient();
 

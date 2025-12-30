@@ -6,23 +6,33 @@ import { AuthService } from './auth/auth.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
+  // Enable CORS
+  app.enableCors({
+    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
+  
+  app.setGlobalPrefix('api/v1');
   const port = process.env.PORT ?? 3000;
 
   // Check MongoDB Connection
   const connection = app.get<Connection>(getConnectionToken());
   connection.on('connected', () => {
-    console.log('✅ MongoDB connected successfully');
+    console.log('MongoDB connected successfully');
   });
   connection.on('error', (error) => {
-    console.error('❌ MongoDB connection error:', error.message);
+    console.error('MongoDB connection error:', error.message);
   });
   connection.on('disconnected', () => {
-    console.log('⚠️  MongoDB disconnected');
+    console.log('MongoDB disconnected');
   });
 
   // Log current connection status
   if (connection.readyState === 1) {
-    console.log('✅ MongoDB is already connected');
+    console.log('MongoDB is already connected');
 
     // Create super admin if doesn't exist
     const authService = app.get(AuthService);
@@ -34,7 +44,7 @@ async function bootstrap() {
 
   await app.listen(port);
   console.log(`🚀 Application is running on: http://localhost:${port}`);
-  console.log(`🔍 Health check: http://localhost:${port}/health`);
-  console.log(`🔐 Auth endpoints: http://localhost:${port}/auth/login`);
+  console.log(`🔍 Health check: http://localhost:${port}/api/v1/health`);
+  console.log(`🔐 Auth endpoints: http://localhost:${port}/api/v1/auth/login`);
 }
 bootstrap();

@@ -9,6 +9,9 @@ export class Product extends Document {
   @Prop({ required: true, unique: true, index: true })
   slug: string;
 
+  @Prop({ required: true, unique: true, index: true })
+  productCode: string;
+
   @Prop({ required: true })
   shortDescription: string;
 

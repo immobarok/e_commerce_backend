@@ -16,6 +16,30 @@ export class ProductsService {
     private cloudinaryService: CloudinaryService,
   ) {}
 
+  private generateProductCode(): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = 'MBRK-';
+    for (let i = 0; i < 5; i++) {
+      code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return code;
+  }
+
+  private async generateUniqueProductCode(): Promise<string> {
+    let productCode = '';
+    let isUnique = false;
+
+    while (!isUnique) {
+      productCode = this.generateProductCode();
+      const existingProduct = await this.productModel.findOne({ productCode }).exec();
+      if (!existingProduct) {
+        isUnique = true;
+      }
+    }
+
+    return productCode;
+  }
+
   async create(
     createProductDto: CreateProductDto,
     files?: Express.Multer.File[],
@@ -31,9 +55,12 @@ export class ProductsService {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
 
+    const productCode = await this.generateUniqueProductCode();
+
     const product = new this.productModel({
       ...createProductDto,
       slug,
+      productCode,
       images: imageUrls,
     });
 

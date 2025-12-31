@@ -6,7 +6,7 @@ import {
   IsBoolean,
   Min,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 
 export class CreateProductDto {
   @IsString()
@@ -22,15 +22,16 @@ export class CreateProductDto {
   description: string;
 
   @IsNumber()
-  @Type(() => Number)
   @Min(0)
+  @Type(() => Number)
   price: number;
 
-  @IsNumber()
-  @Type(() => Number)
-  @Min(0)
   @IsOptional()
-  discountPrice?: number;
+  @Transform(({ value }) => (value === '' ? null : value))
+  @IsNumber()
+  @Min(0)
+  @Type(() => Number)
+  discountPrice?: number | null;
 
   @IsString()
   @IsNotEmpty()
@@ -67,16 +68,17 @@ export class UpdateProductDto {
   description?: string;
 
   @IsNumber()
-  @Type(() => Number)
   @Min(0)
+  @Type(() => Number)
   @IsOptional()
   price?: number;
 
-  @IsNumber()
-  @Type(() => Number)
-  @Min(0)
   @IsOptional()
-  discountPrice?: number;
+  @Transform(({ value }) => (value === '' ? null : value))
+  @IsNumber()
+  @Min(0)
+  @Type(() => Number)
+  discountPrice?: number | null;
 
   @IsString()
   @IsOptional()

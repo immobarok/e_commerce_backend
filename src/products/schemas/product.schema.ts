@@ -18,8 +18,8 @@ export class Product extends Document {
   @Prop({ required: true, type: Number })
   price: number;
 
-  @Prop({ type: Number, default: 0 })
-  discountPrice: number;
+  @Prop({ type: Number, default: null, required: false })
+  discountPrice: number | null;
 
   @Prop({ required: true })
   category: string;

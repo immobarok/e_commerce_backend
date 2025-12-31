@@ -114,4 +114,18 @@ export class AuthService {
     await superAdmin.save();
     console.log('✅ Super admin created successfully');
   }
+
+  async logoutUser(userId: string): Promise<{ message: string }> {
+    // Verify user exists
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    // In a JWT-based system, logout is handled client-side by removing the token
+    // The server just confirms the request is valid
+    return {
+      message: 'Logout successful',
+    };
+  }
 }

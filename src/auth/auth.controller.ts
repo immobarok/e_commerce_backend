@@ -14,11 +14,16 @@ export class AuthController {
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
-
   @Post('create-admin')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN)
   async createAdmin(@Body() createAdminDto: CreateAdminDto, @Request() req) {
     return this.authService.createAdmin(createAdminDto, req.user.userId);
+  }
+//logout user
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  async logout(@Request() req:any) {
+    return this.authService.logoutUser(req.user.userId);
   }
 }

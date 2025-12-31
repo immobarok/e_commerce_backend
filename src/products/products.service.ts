@@ -83,7 +83,10 @@ export class ProductsService {
     }
 
     if (query?.search) {
-      filter.productName = { $regex: query.search, $options: 'i' };
+      filter.$or = [
+        { productName: { $regex: query.search, $options: 'i' } },
+        { productCode: { $regex: query.search, $options: 'i' } },
+      ];
     }
 
     if (query?.minPrice || query?.maxPrice) {

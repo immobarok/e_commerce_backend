@@ -84,3 +84,32 @@ export class UpdateAboutPageDto {
   @Type(() => StatisticsDto)
   statistics: StatisticsDto[];
 }
+
+export class PartialUpdateAboutPageDto {
+  @ValidateNested()
+  @Type(() => AboutHeroDto)
+  @IsOptional()
+  hero?: AboutHeroDto;
+
+  @ValidateNested()
+  @Type(() => AboutContentDto)
+  @IsOptional()
+  content?: AboutContentDto;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PrincipleDto)
+  @IsOptional()
+  principles?: PrincipleDto[];
+
+  @ValidateNested()
+  @Type(() => StudioDto)
+  @IsOptional()
+  studio?: StudioDto;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => StatisticsDto)
+  @IsOptional()
+  statistics?: StatisticsDto[];
+}

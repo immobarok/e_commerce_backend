@@ -3,28 +3,55 @@ import { Document } from 'mongoose';
 
 @Schema({ _id: false })
 class Hero {
-  @Prop() year: string;
-  @Prop() title: string;
-  @Prop() description: string;
-  @Prop() image: string;
+  @Prop({ required: true }) year: string;
+  @Prop({ required: true }) title: string;
+  @Prop({ required: true }) description: string;
+  @Prop({ required: true }) image: string;
 }
 
-@Schema()
+@Schema({ _id: false })
+class Content {
+  @Prop({ required: true }) title: string;
+  @Prop({ required: true }) description: string;
+  @Prop({ required: false }) quote: string;
+  @Prop({ required: true }) image: string;
+}
+
+@Schema({ _id: false })
+class Principle {
+  @Prop({ required: true }) title: string;
+  @Prop({ required: true }) description: string;
+}
+
+@Schema({ _id: false })
+class Studio {
+  @Prop({ required: true }) title: string;
+  @Prop({ required: true }) description: string;
+  @Prop({ type: [String], required: true }) images: string[];
+}
+
+@Schema({ _id: false })
+class Statistics {
+  @Prop({ required: true }) value: number;
+  @Prop({ required: true }) label: string;
+}
+
+@Schema({ timestamps: true })
 export class AboutPage extends Document {
-  @Prop({ type: Hero })
+  @Prop({ type: Hero, required: true })
   hero: Hero;
 
-  @Prop({ type: Object })
-  content: { title: string; description: string; quote: string; image: string };
+  @Prop({ type: Content, required: true })
+  content: Content;
 
-  @Prop({ type: [{ title: String, description: String }] })
-  principles: { title: string; description: string }[];
+  @Prop({ type: [Principle], default: [] })
+  principles: Principle[];
 
-  @Prop({ type: Object })
-  studio: { title: string; description: string; images: string[] };
+  @Prop({ type: Studio, required: true })
+  studio: Studio;
 
-  @Prop({ type: [{ value: Number, label: String }] })
-  statistics: { value: number; label: string }[];
+  @Prop({ type: [Statistics], default: [] })
+  statistics: Statistics[];
 }
 
 export const AboutPageSchema = SchemaFactory.createForClass(AboutPage);

@@ -8,7 +8,6 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { ContactModule } from './contact/contact.module';
 import { FaqsModule } from './faqs/faqs.module';
-import { AboutController } from './about/about.controller';
 import { AboutModule } from './about/about.module';
 
 @Module({
@@ -44,7 +43,7 @@ import { AboutModule } from './about/about.module';
     FaqsModule,
     AboutModule,
   ],
-  controllers: [AppController, AboutController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

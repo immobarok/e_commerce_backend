@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Product } from './schemas/product.schema';
 import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
-import { CloudinaryService } from './cloudinary.service';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class ProductsService {
@@ -47,7 +47,7 @@ export class ProductsService {
     let imageUrls: string[] = [];
 
     if (files && files.length > 0) {
-      imageUrls = await this.cloudinaryService.uploadMultipleImages(files);
+      imageUrls = await this.cloudinaryService.uploadMultipleImages(files, 'products');
     }
 
     const slug = createProductDto.productName
@@ -141,7 +141,7 @@ export class ProductsService {
 
     if (files && files.length > 0) {
       const newImageUrls =
-        await this.cloudinaryService.uploadMultipleImages(files);
+        await this.cloudinaryService.uploadMultipleImages(files, 'products');
       imageUrls = [...imageUrls, ...newImageUrls];
     }
 

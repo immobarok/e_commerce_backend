@@ -12,11 +12,11 @@ export class CloudinaryService {
     });
   }
 
-  async uploadImage(file: Express.Multer.File): Promise<string> {
+  async uploadImage(file: Express.Multer.File, folder: string = 'general'): Promise<string> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          folder: 'products',
+          folder: folder,
           resource_type: 'auto',
         },
         (error, result) => {
@@ -35,8 +35,8 @@ export class CloudinaryService {
     });
   }
 
-  async uploadMultipleImages(files: Express.Multer.File[]): Promise<string[]> {
-    const uploadPromises = files.map((file) => this.uploadImage(file));
+  async uploadMultipleImages(files: Express.Multer.File[], folder: string = 'general'): Promise<string[]> {
+    const uploadPromises = files.map((file) => this.uploadImage(file, folder));
     return Promise.all(uploadPromises);
   }
 
@@ -48,9 +48,10 @@ export class CloudinaryService {
   }
 
   private extractPublicId(imageUrl: string): string {
+    // Extract public ID from URL
+    // Format: https://res.cloudinary.com/cloud_name/image/upload/v123456/folder/filename.jpg
     const parts = imageUrl.split('/');
-    const fileNameWithExtension = parts[parts.length - 1];
-    const fileName = fileNameWithExtension.split('.')[0];
-    return `products/${fileName}`;
+    const folderAndFile = parts.slice(parts.indexOf('upload') + 2).join('/');
+    return folderAndFile.split('.')[0];
   }
 }

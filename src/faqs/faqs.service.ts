@@ -15,15 +15,23 @@ export class FaqsService {
     const savedFaq = await faq.save();
     return {
       category: savedFaq.category,
-      faqs: [{ question: savedFaq.question, answer: savedFaq.answer }],
+      faqs: savedFaq.faqs,
     };
+  }
+
+  async createBulkFaqs(data: CreateFaqDto[]): Promise<FaqResponseDto[]> {
+    const savedFaqs = await this.faqModel.insertMany(data);
+    return savedFaqs.map((faq) => ({
+      category: faq.category,
+      faqs: faq.faqs,
+    }));
   }
 
   async getAllFaqs(): Promise<FaqResponseDto[]> {
     const faqs = await this.faqModel.find().exec();
     return faqs.map((faq) => ({
       category: faq.category,
-      faqs: [{ question: faq.question, answer: faq.answer }],
+      faqs: faq.faqs,
     }));
   }
 
@@ -31,7 +39,7 @@ export class FaqsService {
     const faqs = await this.faqModel.find({ category }).exec();
     return faqs.map((faq) => ({
       category: faq.category,
-      faqs: [{ question: faq.question, answer: faq.answer }],
+      faqs: faq.faqs,
     }));
   }
 }

@@ -6,11 +6,19 @@ export class Faq extends Document {
   @Prop({ required: true })
   category: string;
 
-  @Prop({ required: true })
-  question: string;
-
-  @Prop({ required: true })
-  answer: string;
+  @Prop({
+    type: [
+      {
+        question: { type: String, required: true },
+        answer: { type: String, required: true },
+      },
+    ],
+    required: true,
+  })
+  faqs: Array<{
+    question: string;
+    answer: string;
+  }>;
 }
 
 export const FaqSchema = SchemaFactory.createForClass(Faq);

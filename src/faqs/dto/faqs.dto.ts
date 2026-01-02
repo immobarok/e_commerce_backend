@@ -4,13 +4,18 @@ export class CreateFaqDto {
   @IsNotEmpty()
   category: string;
 
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
-  question: string;
+  faqs: Array<{
+    question: string;
+    answer: string;
+  }>;
+}
 
-  @IsString()
+export class CreateBulkFaqDto {
+  @IsArray()
   @IsNotEmpty()
-  answer: string;
+  categories: CreateFaqDto[];
 }
 
 export class FaqResponseDto {
@@ -19,7 +24,7 @@ export class FaqResponseDto {
   category: string;
 
   @IsArray()
-  @IsOptional()
+  @IsNotEmpty()
   faqs: Array<{
     question: string;
     answer: string;

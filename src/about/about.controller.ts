@@ -7,12 +7,12 @@ import { UpdateAboutPageDto, PartialUpdateAboutPageDto } from './dto/about.dto';
 export class AboutController {
   constructor(private readonly aboutService: AboutService) {}
 
-  @Get()
+  @Get('get-about')
   async getAboutPage() {
     return this.aboutService.getAboutPage();
   }
 
-  @Post()
+  @Post('create-about')
   @UseInterceptors(FileFieldsInterceptor([
     { name: 'heroImage', maxCount: 1 },
     { name: 'contentImage', maxCount: 1 },
@@ -26,7 +26,7 @@ export class AboutController {
     return this.aboutService.saveAboutPage(data, files);
   }
 
-  @Patch()
+  @Patch('update-about')
   @UseInterceptors(FileFieldsInterceptor([
     { name: 'heroImage', maxCount: 1 },
     { name: 'contentImage', maxCount: 1 },

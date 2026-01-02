@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { FaqsService } from './faqs.service';
 import { CreateBulkFaqDto } from './dto/faqs.dto';
 
@@ -18,8 +18,8 @@ export class FaqsController {
     return this.faqsService.getAllFaqs();
   }
 
-  @Get('category/:category')
-  getFaqsByCategory(@Param('category') category: string) {
+  @Get('category')
+  async getFaqsByCategory(@Query('category') category: string) {
     return this.faqsService.getFaqsByCategory(category);
   }
 }

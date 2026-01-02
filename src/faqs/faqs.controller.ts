@@ -4,9 +4,7 @@ import { CreateBulkFaqDto } from './dto/faqs.dto';
 
 @Controller('faqs')
 export class FaqsController {
-  constructor(private readonly faqsService: FaqsService) {
-
-  }
+  constructor(private readonly faqsService: FaqsService) {}
 
   @Post('create')
   createFaq(@Body() data: CreateBulkFaqDto) {

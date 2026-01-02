@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsArray, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsArray } from 'class-validator';
 export class CreateFaqDto {
   @IsString()
   @IsNotEmpty()

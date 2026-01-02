@@ -44,7 +44,5 @@ async function bootstrap() {
 
   await app.listen(port);
   console.log(`🚀 Application is running on: http://localhost:${port}`);
-  console.log(`🔍 Health check: http://localhost:${port}/api/v1/health`);
-  console.log(`🔐 Auth endpoints: http://localhost:${port}/api/v1/auth/login`);
 }
 bootstrap();

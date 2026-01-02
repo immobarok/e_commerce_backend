@@ -27,15 +27,17 @@ export class CreateContactDto {
 export class ContactInformationDto {
   @IsArray()
   @IsEmail({}, { each: true })
-  @IsOptional()
-  email?: string[];
+  email: string[];
 
   @IsString()
-  phoneNumber?: string;
+  @IsNotEmpty()
+  phoneNumber: string;
 
   @IsString()
-  address?: string;
+  @IsNotEmpty()
+  address: string;
 
   @IsString()
-  businessHours?: string;
+  @IsNotEmpty()
+  businessHours: string;
 }

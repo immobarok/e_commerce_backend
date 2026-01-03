@@ -3,13 +3,14 @@ import {
   UnauthorizedException,
   ConflictException,
   ForbiddenException,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserRole } from '../users/schemas/user.schema';
-import { LoginDto, CreateAdminDto, LoginResponseDto } from './dto/auth.dto';
+import { LoginDto, CreateAdminDto, RegisterDto, LoginResponseDto } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -47,6 +48,50 @@ export class AuthService {
     };
   }
 
+  async register(registerDto: RegisterDto): Promise<{ message: string; access_token: string; user: any }> {
+    const { fullName, email, password, confirmPassword } = registerDto;
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    // Check if email already exists
+    const existingUser = await this.userModel.findOne({ email });
+    if (existingUser) {
+      throw new ConflictException('Email already exists');
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user
+    const newUser = new this.userModel({
+      fullName,
+      email,
+      password: hashedPassword,
+      role: UserRole.USER,
+      isActive: true,
+    });
+
+    await newUser.save();
+
+    // Generate JWT token for automatic login
+    const payload = { sub: newUser._id, email: newUser.email, role: newUser.role };
+    const access_token = this.jwtService.sign(payload);
+
+    return {
+      message: 'User registered successfully',
+      access_token,
+      user: {
+        id: newUser._id.toString(),
+        fullName: newUser.fullName,
+        email: newUser.email,
+        role: newUser.role,
+      },
+    };
+  }
+
   async createAdmin(
     createAdminDto: CreateAdminDto,
     creatorId: string,
@@ -64,6 +109,7 @@ export class AuthService {
 
     // Create admin
     const newAdmin = new this.userModel({
+      fullName: 'Admin',
       email,
       password: hashedPassword,
       role: UserRole.ADMIN,
@@ -77,6 +123,7 @@ export class AuthService {
       message: 'Admin created successfully',
       admin: {
         id: newAdmin._id.toString(),
+        fullName: newAdmin.fullName,
         email: newAdmin.email,
         role: newAdmin.role,
         createdAt: newAdmin.createdAt,
@@ -105,6 +152,7 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const superAdmin = new this.userModel({
+      fullName: 'Super Admin',
       email,
       password: hashedPassword,
       role: UserRole.SUPER_ADMIN,

@@ -8,6 +8,13 @@ export class CreateAdminDto {
   password: string;
 }
 
+export class RegisterDto {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export class LoginResponseDto {
   access_token: string;
   user: {

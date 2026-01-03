@@ -42,14 +42,19 @@ export class AuthService {
       access_token,
       user: {
         id: user._id.toString(),
+        fullName: user.fullName,
         email: user.email,
         role: user.role,
+        displayProfile: user.displayProfile || "",
+        address: user.address || "",
+        phone: user.phone || "",
+        bio: user.bio || "",
       },
     };
   }
 
   async register(registerDto: RegisterDto): Promise<{ message: string; access_token: string; user: any }> {
-    const { fullName, email, password, confirmPassword } = registerDto;
+    const { fullName, email, password, confirmPassword, displayProfile, address, phone, bio } = registerDto;
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -70,6 +75,10 @@ export class AuthService {
       fullName,
       email,
       password: hashedPassword,
+      displayProfile,
+      address,
+      phone,
+      bio,
       role: UserRole.USER,
       isActive: true,
     });
@@ -88,6 +97,10 @@ export class AuthService {
         fullName: newUser.fullName,
         email: newUser.email,
         role: newUser.role,
+        displayProfile: newUser.displayProfile || "",
+        address: newUser.address || "",
+        phone: newUser.phone || "",
+        bio: newUser.bio || "",
       },
     };
   }

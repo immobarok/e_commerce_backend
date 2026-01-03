@@ -21,6 +21,18 @@ export class User extends Document {
   @Prop({ type: String, enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
+  @Prop()
+  displayProfile: string;
+
+  @Prop()
+  address: string;
+
+  @Prop()
+  phone: string;
+
+  @Prop()
+  bio: string;
+
   @Prop({ default: true })
   isActive: boolean;
 

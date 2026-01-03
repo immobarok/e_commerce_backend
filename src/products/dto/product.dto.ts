@@ -21,6 +21,14 @@ export class CreateProductDto {
   @IsNotEmpty()
   description: string;
 
+  @IsString()
+  @IsOptional()
+  additionalInfo?: string;
+
+  @IsString()
+  @IsOptional()
+  colorCode?: string;
+
   @IsNumber()
   @Min(0)
   @Type(() => Number)
@@ -66,6 +74,14 @@ export class UpdateProductDto {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @IsString()
+  @IsOptional()
+  additionalInfo?: string;
+
+  @IsString()
+  @IsOptional()
+  colorCode?: string;
 
   @IsNumber()
   @Min(0)

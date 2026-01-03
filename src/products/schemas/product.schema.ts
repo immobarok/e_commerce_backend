@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 export class Product extends Document {
   @Prop({ required: true })
   productName: string;
-  
+
   @Prop({ required: true, unique: true, index: true })
   slug: string;
 
@@ -17,6 +17,12 @@ export class Product extends Document {
 
   @Prop({ required: true })
   description: string;
+
+  @Prop({ required: false })
+  additionalInfo: string;
+
+  @Prop({ required: false })
+  colorCode: string;
 
   @Prop({ required: true, type: Number })
   price: number;

@@ -11,6 +11,7 @@ import { FaqsModule } from './faqs/faqs.module';
 import { AboutModule } from './about/about.module';
 import { BlogsModule } from './blogs/blogs.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
+import { SystemModule } from './system/system.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { SubscribeModule } from './subscribe/subscribe.module';
     AboutModule,
     BlogsModule,
     SubscribeModule,
+    SystemModule,
   ],
   controllers: [AppController],
   providers: [AppService],

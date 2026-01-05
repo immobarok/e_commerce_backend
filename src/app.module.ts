@@ -10,6 +10,7 @@ import { ContactModule } from './contact/contact.module';
 import { FaqsModule } from './faqs/faqs.module';
 import { AboutModule } from './about/about.module';
 import { BlogsModule } from './blogs/blogs.module';
+import { SubscribeModule } from './subscribe/subscribe.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { BlogsModule } from './blogs/blogs.module';
     FaqsModule,
     AboutModule,
     BlogsModule,
+    SubscribeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

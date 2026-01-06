@@ -12,6 +12,7 @@ import { AboutModule } from './about/about.module';
 import { BlogsModule } from './blogs/blogs.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { SystemModule } from './system/system.module';
+import { HomeBannerModule } from './home_banner/home_banner.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { SystemModule } from './system/system.module';
     BlogsModule,
     SubscribeModule,
     SystemModule,
+    HomeBannerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

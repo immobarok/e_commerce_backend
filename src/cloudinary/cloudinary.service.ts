@@ -12,7 +12,16 @@ export class CloudinaryService {
     });
   }
 
-  async uploadImage(file: Express.Multer.File, folder: string = 'general'): Promise<string> {
+  async uploadImage(file: Express.Multer.File, folder: string = 'general', maxSizeInMB: number = 5): Promise<string> {
+    // Validate file size (defense in depth)
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      const fileSizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+      throw new Error(
+        `File "${file.originalname}" exceeds maximum size of ${maxSizeInMB}MB (actual: ${fileSizeInMB}MB)`
+      );
+    }
+
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {

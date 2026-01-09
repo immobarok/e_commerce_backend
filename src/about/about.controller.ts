@@ -2,10 +2,11 @@ import { Controller, Get, Post, Patch, Body, UsePipes, ValidationPipe, UseInterc
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { AboutService } from './about.service';
 import { UpdateAboutPageDto, PartialUpdateAboutPageDto } from './dto/about.dto';
+import { FileSizeValidationPipe } from '../common/pipes/file-size-validation.pipe';
 
 @Controller('about')
 export class AboutController {
-  constructor(private readonly aboutService: AboutService) {}
+  constructor(private readonly aboutService: AboutService) { }
 
   @Get('get-about')
   async getAboutPage() {
@@ -21,7 +22,7 @@ export class AboutController {
   @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
   async saveAboutPage(
     @Body() data: UpdateAboutPageDto,
-    @UploadedFiles() files: { heroImage?: Express.Multer.File[], contentImage?: Express.Multer.File[], studioImages?: Express.Multer.File[] }
+    @UploadedFiles(new FileSizeValidationPipe(5)) files: { heroImage?: Express.Multer.File[], contentImage?: Express.Multer.File[], studioImages?: Express.Multer.File[] }
   ) {
     return this.aboutService.saveAboutPage(data, files);
   }
@@ -35,7 +36,7 @@ export class AboutController {
   @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
   async updateAboutPage(
     @Body() data: PartialUpdateAboutPageDto,
-    @UploadedFiles() files: { heroImage?: Express.Multer.File[], contentImage?: Express.Multer.File[], studioImages?: Express.Multer.File[] }
+    @UploadedFiles(new FileSizeValidationPipe(5)) files: { heroImage?: Express.Multer.File[], contentImage?: Express.Multer.File[], studioImages?: Express.Multer.File[] }
   ) {
     return this.aboutService.partialUpdateAboutPage(data, files);
   }

@@ -3,22 +3,22 @@ import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 export class BannerDto {
     @IsString()
     @IsNotEmpty()
-    label:string;
+    label: string;
 
     @IsString()
     @IsNotEmpty()
-    title:string;
+    title: string;
 
     @IsString()
     @IsNotEmpty()
-    description:string;
-    
-    @IsString()
-    @IsNotEmpty()
-    image:string;
-    
+    description: string;
+
     @IsString()
     @IsOptional()
-    link?:string;   
+    image: string;
+
+    @IsString()
+    @IsOptional()
+    link?: string;
 }
 

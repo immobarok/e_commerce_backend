@@ -1,15 +1,20 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Banner } from 'src/banners/schemas/banner.schema';
 import { BannerDto } from './dto/banner.dto';
 
 @Injectable()
 export class BannersService {
-    constructor(private bannerModel: Model<Banner>) { }
+    constructor(@InjectModel(Banner.name) private bannerModel: Model<Banner>) { }
 
     async createBanner(bannerDto: BannerDto): Promise<Banner> {
         const createdBanner = new this.bannerModel(bannerDto);
         return createdBanner.save();
+    }
+
+    async createMultipleBanners(bannersDto: BannerDto[]): Promise<Banner[]> {
+        return this.bannerModel.insertMany(bannersDto);
     }
 
     async findAll(): Promise<Banner[]> {

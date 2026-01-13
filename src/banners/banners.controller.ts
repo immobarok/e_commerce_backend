@@ -22,14 +22,14 @@ import { memoryStorage } from 'multer';
 
 @Controller('banners')
 export class BannersController {
-  constructor(private readonly bannersService: BannersService) {}
+  constructor(private readonly bannersService: BannersService) { }
 
   @Post('create')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
   @UseInterceptors(
     FilesInterceptor('image', 10, {
-      storage: memoryStorage(),   // 🔥 Required for Cloudinary
+      storage: memoryStorage(),
     }),
   )
   async create(

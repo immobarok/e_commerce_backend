@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body} from '@nestjs/common';
 import { StripeService } from './stripe.service';
 
 @Controller('payments')

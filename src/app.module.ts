@@ -16,6 +16,7 @@ import { HomeBannerModule } from './home_banner/home_banner.module';
 import { BannersModule } from './banners/banners.module';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { CartsModule } from './carts/carts.module';
+import { StripeModule } from './stripe/stripe.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { CartsModule } from './carts/carts.module';
       },
     }),
     CartsModule,
+    StripeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

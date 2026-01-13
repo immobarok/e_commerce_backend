@@ -9,7 +9,7 @@ import { CartItemDto, SyncCartDto } from './dto/cart.dto';
 @Injectable()
 export class CartsService {
     private readonly redis: Redis | null;
-    private readonly CACHE_TTL = 3600 * 24; // 24 hours
+    private readonly CACHE_TTL = 3600 * 24;
 
     constructor(
         @InjectModel(Cart.name) private cartModel: Model<Cart>,

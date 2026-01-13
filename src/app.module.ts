@@ -13,7 +13,6 @@ import { BlogsModule } from './blogs/blogs.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { SystemModule } from './system/system.module';
 import { HomeBannerModule } from './home_banner/home_banner.module';
-import { BannersModule } from './banners/banners.module';
 
 @Module({
   imports: [
@@ -51,9 +50,8 @@ import { BannersModule } from './banners/banners.module';
     SubscribeModule,
     SystemModule,
     HomeBannerModule,
-    BannersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

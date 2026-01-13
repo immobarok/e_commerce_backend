@@ -10,7 +10,7 @@ import { UserRole } from '../../users/schemas/user.schema';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(
@@ -24,7 +24,7 @@ export class RolesGuard implements CanActivate {
 
     const { user } = context.switchToHttp().getRequest();
 
-    const hasRole = requiredRoles.some((role) => user.role === role);
+    const hasRole = requiredRoles.some((role) => user.role === role) || user.role === UserRole.SUPER_ADMIN;
 
     if (!hasRole) {
       throw new ForbiddenException(

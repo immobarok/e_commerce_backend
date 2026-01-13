@@ -13,6 +13,7 @@ import { BlogsModule } from './blogs/blogs.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { SystemModule } from './system/system.module';
 import { HomeBannerModule } from './home_banner/home_banner.module';
+import { BannersModule } from './banners/banners.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { HomeBannerModule } from './home_banner/home_banner.module';
     ),
     // Feature Modules
     AuthModule,
+    BannersModule,
     UsersModule,
     ProductsModule,
     ContactModule,

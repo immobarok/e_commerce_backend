@@ -14,6 +14,8 @@ import { SubscribeModule } from './subscribe/subscribe.module';
 import { SystemModule } from './system/system.module';
 import { HomeBannerModule } from './home_banner/home_banner.module';
 import { BannersModule } from './banners/banners.module';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
+import { CartsModule } from './carts/carts.module';
 
 @Module({
   imports: [
@@ -52,6 +54,15 @@ import { BannersModule } from './banners/banners.module';
     SubscribeModule,
     SystemModule,
     HomeBannerModule,
+    // Redis Configuration
+    RedisModule.forRoot({
+      config: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: parseInt(process.env.REDIS_PORT || '6379'),
+        password: process.env.REDIS_PASSWORD || undefined,
+      },
+    }),
+    CartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

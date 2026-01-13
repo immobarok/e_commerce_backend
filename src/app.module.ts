@@ -17,6 +17,9 @@ import { BannersModule } from './banners/banners.module';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { CartsModule } from './carts/carts.module';
 import { StripeModule } from './stripe/stripe.module';
+import { HomeService } from './home/home.service';
+import { HomeController } from './home/home.controller';
+import { HomeModule } from './home/home.module';
 
 @Module({
   imports: [
@@ -65,8 +68,9 @@ import { StripeModule } from './stripe/stripe.module';
     }),
     CartsModule,
     StripeModule,
+    HomeModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, HomeController],
+  providers: [AppService, HomeService],
 })
 export class AppModule { }

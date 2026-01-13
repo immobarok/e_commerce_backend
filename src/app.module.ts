@@ -18,6 +18,7 @@ import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { CartsModule } from './carts/carts.module';
 import { StripeModule } from './stripe/stripe.module';
 import { HomeModule } from './home/home.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { HomeModule } from './home/home.module';
     CartsModule,
     StripeModule,
     HomeModule,
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

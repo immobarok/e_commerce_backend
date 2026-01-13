@@ -35,4 +35,14 @@ export class HomeController {
     async patchDisplayReview(@Param('id') id: string, @Body() displayReviewDto: DisplayReviewDto) {
         return this.homeService.patchDisplayReview(id, displayReviewDto);
     }
+
+    @Get("deals-of-the-week")
+    async getDealsOfTheWeek() {
+        return this.homeService.getDealsOfTheWeek();
+    }
+
+    @Post("calculate-deals")
+    async calculateDeals() {
+        return this.homeService.calculateDealsOfTheWeek();
+    }
 }
